@@ -41,7 +41,6 @@ cd assignment-consumerAndRetrySrvice
 ### 2. Build the project
 ```
 mvn clean install
-
 ```
 ### 3. Run the application
 ```
