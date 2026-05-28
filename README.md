@@ -34,7 +34,7 @@ src/main/java/com/assignment/consumer/
 ## ⚙️ Setup & Installation
 
 ### 1. Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/Panchalic3/assignment-consumerAndRetrySrvice
 
 ### 2. Build the project
 mvn clean install
