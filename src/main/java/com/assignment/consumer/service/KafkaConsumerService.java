@@ -2,6 +2,7 @@ package com.assignment.consumer.service;
 
 import com.assignment.consumer.model.EventPayload;
 import com.assignment.consumer.model.RetryEvent;
+import com.assignment.consumer.model.RetryStatus;
 import com.assignment.consumer.repository.RetryEventRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
@@ -39,7 +40,7 @@ public class KafkaConsumerService {
 
         } catch (Exception exception) {
             log.error(RETRY_FAILURE_LOG_ADD_RETRY_LOG);
-            RetryEvent retryEvent = new RetryEvent(message, 0, FAILED);
+            RetryEvent retryEvent = new RetryEvent(message, 0, RetryStatus.FAILED);
             this.retryEventRepository.save(retryEvent);
         }
     }

@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import static com.assignment.consumer.util.Constants.MSG_SUCCESSFULLY_SENT_TO_RECEIVER_LOG;
 import static com.assignment.consumer.util.Constants.TARGET_URL;
 
 @Service
@@ -24,7 +25,7 @@ public class ReceiverApiClient {
     public void sendToReceiver(EventPayload payloadParam) {
 
         this.restTemplate.postForObject(TARGET_URL, payloadParam, String.class);
-        log.info("Message successfully sent to receiver service with event id {}", payloadParam.getEventId());
+        log.info(MSG_SUCCESSFULLY_SENT_TO_RECEIVER_LOG, payloadParam.getEventId());
 
     }
 }

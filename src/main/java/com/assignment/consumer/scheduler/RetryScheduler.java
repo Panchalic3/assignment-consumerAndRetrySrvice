@@ -2,6 +2,7 @@ package com.assignment.consumer.scheduler;
 
 import com.assignment.consumer.model.EventPayload;
 import com.assignment.consumer.model.RetryEvent;
+import com.assignment.consumer.model.RetryStatus;
 import com.assignment.consumer.repository.RetryEventRepository;
 import com.assignment.consumer.service.ReceiverApiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,14 +33,14 @@ public class RetryScheduler {
     @Scheduled(fixedDelay = 10000)
     public void retryFailedMessages() {
 
-        List<RetryEvent> failedEvents = this.retryEventRepository.findByStatus(FAILED);
+        List<RetryEvent> failedEvents = this.retryEventRepository.findByStatus(RetryStatus.FAILED);
 
         for (RetryEvent event : failedEvents) {
             try {
                 EventPayload payload = this.objectMapper.readValue(event.getPayload(), EventPayload.class);
 
                 this.receiverApiClient.sendToReceiver(payload);
-                event.setStatus(SUCCESS);
+                event.setStatus(RetryStatus.SUCCESS);
 
             } catch (Exception exception) {
                 log.error(RETRY_FAILURE_LOG, event.getRetryCount());

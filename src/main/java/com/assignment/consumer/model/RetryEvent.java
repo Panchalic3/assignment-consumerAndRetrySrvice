@@ -17,9 +17,10 @@ public class RetryEvent {
     private Long id;
     private String payload;
     private int retryCount;
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private RetryStatus status;
 
-    public RetryEvent(String payloadParam, int retryCountParam, String statusParam) {
+    public RetryEvent(String payloadParam, int retryCountParam, RetryStatus statusParam) {
         this.payload = payloadParam;
         this.retryCount = retryCountParam;
         this.status = statusParam;
