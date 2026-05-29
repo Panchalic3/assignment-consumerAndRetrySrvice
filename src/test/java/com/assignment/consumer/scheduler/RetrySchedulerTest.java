@@ -2,6 +2,7 @@ package com.assignment.consumer.scheduler;
 
 import com.assignment.consumer.model.EventPayload;
 import com.assignment.consumer.model.RetryEvent;
+import com.assignment.consumer.model.RetryStatus;
 import com.assignment.consumer.repository.RetryEventRepository;
 import com.assignment.consumer.service.ReceiverApiClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,7 +15,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.assignment.consumer.util.Constants.FAILED;
 import static com.assignment.consumer.util.Constants.SUCCESS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -35,10 +35,10 @@ class RetrySchedulerTest {
     @BeforeEach
     void setUp() {
         event = new RetryEvent();
-        event.setStatus(FAILED);
+        event.setStatus(RetryStatus.FAILED);
         event.setRetryCount(0);
 
-        when(retryEventRepository.findByStatus(FAILED))
+        when(retryEventRepository.findByStatus(RetryStatus.FAILED))
                 .thenReturn(List.of(event));
     }
 
@@ -55,7 +55,7 @@ class RetrySchedulerTest {
         verify(receiverApiClient).sendToReceiver(payload);
         verify(retryEventRepository).save(event);
 
-        assertEquals(SUCCESS, event.getStatus());
+        assertEquals(SUCCESS, event.getStatus().toString());
     }
 
     @Test
